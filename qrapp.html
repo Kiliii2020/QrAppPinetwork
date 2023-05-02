@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Generador de código QR para Pi Network</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			text-align: center;
+			background-image: url('https://play-lh.googleusercontent.com/ItxDn_WNq3QPvuXS1jaXwujqvRobrH-hpEqbDy1iCVx0b5Z5dv9ADyfd83Dn6cDsNbE=w240-h480');
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+		h1 {
+			margin-top: 30px;
+			margin-bottom: 10px;
+			font-size: 36px;
+			font-weight: bold;
+			color: #40e03b;
+		}
+		p {
+			margin-bottom: 20px;
+			font-size: 0px;
+			color: #ff00ff;
+		}
+		form {
+			margin-bottom: 50px;
+		}
+		label {
+			display: inline-block;
+			margin-bottom: 30px;
+			font-size: 40px;
+			font-weight: bold;
+			color: #51ff00;
+		}
+		input[type=text] {
+			width: 300px;
+			height: 40px;
+			font-size: 24px;
+			padding-left: 10px;
+			margin-bottom: 20px;
+		}
+		button {
+			background-color: #d697e9;
+			color: rgb(0, 0, 0);
+			padding: 10px 20px;
+			font-size: 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+		button:hover {
+			background-color: #030303;
+		}
+		#qr-code {
+			margin-top: 30px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Generador de código QR para Pi Network</h1>
+	<p>Ingresa tu dirección de Pi Network para generar un código QR.</p>
+	<form>
+		<label for="pi-address">Dirección de Pi Network:</label><br>
+		<input type="text" id="pi-address" name="pi-address"><br>
+		<button type="button" onclick="generateQR()">Generar código QR</button>
+	</form>
+	<div id="qr-code"></div>
+	<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+	<script>
+		function generateQR() {
+			var piAddress = document.getElementById("pi-address").value;
+			if (piAddress.trim() !== "") {
+				var qrCode = new QRCode(document.getElementById("qr-code"), {
+					text: piAddress,
+					width: 256,
+					height: 256,
+					colorDark: "#000000",
+					colorLight: "#ffffff",
+					correctLevel: QRCode.CorrectLevel.H
+				});
+				downloadQR();
+			} else {
+				alert("Por favor, ingresa una dirección de Pi Network.");
+			}
+		}
+		
+		function downloadQR() {
+			var canvas = document.getElementById("qr-code").getElementsByTagName("canvas")[0];
+			var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+			var link = document.createElement("a");
+			link.download = "pi-network-qr-code.png";
+			link.href = image;
+			link.click();
+		}
+	</script>
+</body>
+</html>

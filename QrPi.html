@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generador de código QR para Pi Network</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('https://play-lh.googleusercontent.com/ItxDn_WNq3QPvuXS1jaXwujqvRobrH-hpEqbDy1iCVx0b5Z5dv9ADyfd83Dn6cDsNbE=w240-h480');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        h1 {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-size: 36px;
+            font-weight: bold;
+            color: #40e03b;
+        }
+        p {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #ff00ff;
+        }
+        form {
+            margin-bottom: 50px;
+        }
+        label {
+            display: inline-block;
+            margin-bottom: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #51ff00;
+            text-align: left;
+        }
+        input[type=text] {
+            width: 300px;
+            height: 40px;
+            font-size: 24px;
+            padding-left: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #d697e9;
+            color: rgb(0, 0, 0);
+            padding: 10px 20px;
+            font-size: 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #030303;
+        }
+        #qr-code {
+            margin-top: 30px;
+        }
+        #alerts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 10px;
+            background-color: #51ff00;
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generador de código QR para Pi Network</h1>
+    <p>Ingresa tu dirección de Pi Network para generar un código QR:</p>
+    <form>
+        <label for="pi-address">Dirección de Pi Network:</label>
+        <input type="text" id="pi-address" name="pi-address" placeholder="Escribe aquí tu dirección de Pi Network">
+        <br>
+        <button type="button" onclick="generateQR()">Generar QR</button>
+    </form>
+
+    <div id="qr-container"></div>
+    <div id="alerts"></div>
+
+    <script>
+        function generateQR() {
+            // Obtiene el valor de la dirección de Pi Network
+            var piAddress = document.getElementById("pi-address").value;
+            // Verifica que la dirección tenga el formato correcto
+            var regex = /^GB[A-Z0-9]{54}$/;
+            if (!regex.test(piAddress)) {
+                var alerts = document.getElementById("alerts");
+                alerts.style.display = "block";
+                alerts.innerHTML = "La dirección de Pi Network ingresada no es válida. Por favor, ingrese una dirección válida en el formato GBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+return;
+}
+        // Crea el URL para generar el código QR
+        var qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + piAddress;
+        
+        // Crea el elemento de imagen para mostrar el código QR
+        var qrImg = document.createElement("img");
+        qrImg.src = qrUrl;
+        
+        // Añade el elemento de imagen al contenedor del código QR
+        var qrContainer = document.getElementById("qr-container");
+        qrContainer.innerHTML = "";
+        qrContainer.appendChild(qrImg);
+    }
+</script>
+
+<div id="alerts"></div>
+<div id="qr-container"></div>
+<footer>
+  <a href="politicadeprivacidad.html">Política de privacidad</a>
+</footer>
+
+</body>
+</html> 

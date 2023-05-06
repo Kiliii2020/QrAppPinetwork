@@ -93,7 +93,7 @@
             if (!regex.test(piAddress)) {
                 var alerts = document.getElementById("alerts");
                 alerts.style.display = "block";
-                alerts.innerHTML = "La dirección de Pi Network ingresada no es válida. Por favor, ingrese una dirección válida en el formato GBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+                alerts.innerHTML = "La dirección de Pi Network ingresada no es válida. Por favor, ingrese una dirección válida en el formato Gxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 return;
 }
         // Crea el URL para generar el código QR
@@ -115,5 +115,41 @@ return;
 <footer>
     <a href="politicadeprivacidad.html" style="color: green">Privacy Policy</a>
   </footer>
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+<script>
+  Pi.init({ version: "2.0" });
+</script>
+<script>
+    // Esta es la función para autenticar al usuario y obtener los permisos necesarios para realizar operaciones relacionadas con el usuario
+    function authenticateUser() {
+        // Lista de permisos que se necesitan para realizar operaciones con el usuario
+        const scopes = ['payments'];
+
+        // Esta función se llama cuando se encuentra un pago incompleto (pendiente)
+        function onIncompletePaymentFound(payment) {
+            console.log('Se encontró un pago pendiente:', payment);
+            // Aquí puedes tomar acciones para completar el pago pendiente
+        };
+
+        // Esta función se llama cuando el usuario acepta compartir sus datos con tu aplicación
+        function onAuthSuccess(auth) {
+            console.log('¡Hola! Ya estás autorizado para realizar pagos.');
+            // Aquí puedes realizar operaciones con el usuario
+        };
+
+        // Esta función se llama cuando ocurre un error en la autenticación
+        function onAuthError(error) {
+            console.error('Ocurrió un error al intentar autenticar al usuario:', error);
+        };
+
+        // Llamamos a la función `authenticate` de Pi Network con los parámetros necesarios
+        Pi.authenticate(scopes, onIncompletePaymentFound).then(onAuthSuccess).catch(onAuthError);
+    }
+
+    // Llamamos a la función `authenticateUser` cuando se carga la página
+    window.addEventListener('load', authenticateUser);
+</script>
+
+
 </body>
 </html> 
